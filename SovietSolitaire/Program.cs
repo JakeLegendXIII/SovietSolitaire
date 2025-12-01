@@ -1,2 +1,2 @@
-﻿using var game = new SovietSolitaire.Game1();
+﻿using var game = new SovietSolitaire.MainGame();
 game.Run();
