@@ -28,6 +28,10 @@ public class MainGame : Game
 		Content.RootDirectory = "Content";
 		IsMouseVisible = true;
 
+		_graphics.PreferredBackBufferWidth = _nativeWidth;
+		_graphics.PreferredBackBufferHeight = _nativeHeight;
+		_graphics.ApplyChanges();
+
 		Window.Title = "Soviet Solitaire";
 		Window.AllowUserResizing = true;
 		Window.ClientSizeChanged += OnClientSizeChanged;
@@ -63,7 +67,21 @@ public class MainGame : Game
 	{
 		GraphicsDevice.Clear(Color.CornflowerBlue);
 
-		// TODO: Add your drawing code here
+		// Add RenterTarget2D to allow screen resizing
+		GraphicsDevice.SetRenderTarget(_renderTarget);
+
+		GraphicsDevice.Clear(Color.CornflowerBlue);
+
+		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+		
+
+		_spriteBatch.End();
+
+		GraphicsDevice.SetRenderTarget(null);
+
+		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+		_spriteBatch.Draw(_renderTarget, _renderDestination, Color.White);
+		_spriteBatch.End();
 
 		base.Draw(gameTime);
 	}
