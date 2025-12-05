@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SovietSolitaire.Entities;
+using SovietSolitaire.Input;
 using System;
 
 namespace SovietSolitaire;
@@ -59,6 +60,8 @@ public class MainGame : Game
 
 	protected override void Update(GameTime gameTime)
 	{
+	    InputManager.Update(_renderDestination, _scale);
+
 		if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 			Exit();
 
