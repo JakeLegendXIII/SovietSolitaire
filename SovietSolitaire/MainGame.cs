@@ -77,17 +77,15 @@ public class MainGame : Game
 		GraphicsDevice.Clear(Color.CornflowerBlue);
 
 		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-		
+
+		_deck.Draw(_spriteBatch);
 
 		_spriteBatch.End();
 
 		GraphicsDevice.SetRenderTarget(null);
 
 		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-		_spriteBatch.Draw(_renderTarget, _renderDestination, Color.White);
-
-		_deck.Draw(_spriteBatch);
-
+		_spriteBatch.Draw(_renderTarget, _renderDestination, Color.White);		
 		_spriteBatch.End();
 
 		base.Draw(gameTime);
