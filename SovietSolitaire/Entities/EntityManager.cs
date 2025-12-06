@@ -10,8 +10,8 @@ public class EntityManager : IGameEntity
 	private const int ScreenWidth = 1280;
 	private const int ScreenHeight = 800;
 	private const int SlotCount = 9;
-	private const int CardWidth = 71;
-	private const int SlotPadding = 50;	
+	private const int SideMargin = 20;
+	private const int SlotPadding = 10;	
 
 	private List<Slot> _slots;
 	private Deck _deck;
@@ -25,14 +25,17 @@ public class EntityManager : IGameEntity
 
 	private void InitializeSlots()
 	{
-		int totalSlotWidth = (CardWidth * SlotCount) + (SlotPadding * (SlotCount - 1));
-		int startX = (ScreenWidth - totalSlotWidth) / 2;
-		int slotY = ScreenHeight / 2;
+		int availableWidth = ScreenWidth - (2 * SideMargin);
+		int totalPadding = SlotPadding * (SlotCount - 1);
+		int cardWidth = (availableWidth - totalPadding) / SlotCount;
+		
+		int startX = SideMargin;
+		int slotY = (ScreenHeight / 2) - 100;
 
 		for (int i = 0; i < SlotCount; i++)
 		{
-			int slotX = startX + (i * (CardWidth + SlotPadding));
-			_slots.Add(new Slot(new Point(slotX, slotY)));
+			int slotX = startX + (i * (cardWidth + SlotPadding));
+			_slots.Add(new Slot(new Point(slotX, slotY), cardWidth));
 		}
 	}
 

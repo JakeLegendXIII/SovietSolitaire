@@ -7,8 +7,8 @@ namespace SovietSolitaire.Entities;
 
 public class Deck : IGameEntity
 {
-	private const int CardWidth = 213;
-	private const int CardHeight = 288;
+	private const int CardWidth = 190;
+	private const int CardHeight = 250;
 	private const int CardX = 1057;
 	private const int CardY = 10;
 	private const int LineWidth = 2;
