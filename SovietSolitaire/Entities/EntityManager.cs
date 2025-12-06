@@ -7,7 +7,12 @@ namespace SovietSolitaire.Entities;
 
 public class EntityManager : IGameEntity
 {
-	// TODO : List of Slots that have list of cards
+	private const int ScreenWidth = 1280;
+	private const int ScreenHeight = 800;
+	private const int SlotCount = 9;
+	private const int CardWidth = 71;
+	private const int SlotPadding = 50;	
+
 	private List<Slot> _slots;
 	private Deck _deck;
 
@@ -15,6 +20,20 @@ public class EntityManager : IGameEntity
 	{
 		_slots = new();
 		_deck = new();
+		InitializeSlots();
+	}
+
+	private void InitializeSlots()
+	{
+		int totalSlotWidth = (CardWidth * SlotCount) + (SlotPadding * (SlotCount - 1));
+		int startX = (ScreenWidth - totalSlotWidth) / 2;
+		int slotY = ScreenHeight / 2;
+
+		for (int i = 0; i < SlotCount; i++)
+		{
+			int slotX = startX + (i * (CardWidth + SlotPadding));
+			_slots.Add(new Slot(new Point(slotX, slotY)));
+		}
 	}
 
 	public void Draw(SpriteBatch spriteBatch)
