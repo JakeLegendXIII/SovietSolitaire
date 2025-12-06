@@ -21,9 +21,9 @@ public class MainGame : Game
 	bool _isFullscreen = false;
 	bool _isBorderless = false;
 	int _width = 0;
-	int _height = 0;
+	int _height = 0;	
 
-	private Deck _deck;
+	EntityManager _entityManager;
 
 	public MainGame()
 	{
@@ -48,7 +48,7 @@ public class MainGame : Game
 
 		CalculateRenderDestination();
 
-		_deck = new Deck();
+		_entityManager = new EntityManager();
 	}
 
 	protected override void LoadContent()
@@ -65,7 +65,7 @@ public class MainGame : Game
 		if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 			Exit();
 
-		_deck.Update(gameTime);
+		_entityManager.Update(gameTime);
 
 		base.Update(gameTime);
 	}
@@ -81,7 +81,7 @@ public class MainGame : Game
 
 		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-		_deck.Draw(_spriteBatch);
+		_entityManager.Draw(_spriteBatch);
 
 		_spriteBatch.End();
 
