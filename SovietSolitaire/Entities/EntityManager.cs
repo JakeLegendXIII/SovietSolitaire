@@ -11,9 +11,11 @@ public class EntityManager : IGameEntity
 	private const int ScreenHeight = 800;
 	private const int SlotCount = 9;
 	private const int SideMargin = 20;
-	private const int SlotPadding = 10;	
+	private const int SlotPadding = 10;
+	private const int DeckCount = 36;
 
 	private List<Slot> _slots;
+	private List<Card> _cards;
 	private Deck _deck;
 
 	public EntityManager()
