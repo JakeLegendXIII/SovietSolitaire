@@ -13,7 +13,7 @@ public class EntityManager : IGameEntity
 	private const int SlotCount = 9;
 	private const int SideMargin = 20;
 	private const int SlotPadding = 10;
-	private const int DeckCount = 36;
+	private const int DeckCount = 37; // First card is blank can be used for back of deck or flipped cards for now
 
 	private List<Slot> _slots;
 	private List<Card> _cards;
