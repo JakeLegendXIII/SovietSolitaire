@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SovietSolitaire.Library;
+using System;
 using System.Collections.Generic;
 
 namespace SovietSolitaire.Entities;
@@ -39,9 +40,11 @@ public class EntityManager : IGameEntity
 			int slotX = startX + (i * (cardWidth + SlotPadding));
 			_slots.Add(new Slot(new Point(slotX, slotY), cardWidth));
 		}
-	}
 
-	public void Draw(SpriteBatch spriteBatch)
+		CreateCardDeck();
+	}    
+
+    public void Draw(SpriteBatch spriteBatch)
 	{
 		_deck.Draw(spriteBatch);
 		foreach (var slot in _slots)
@@ -58,4 +61,9 @@ public class EntityManager : IGameEntity
 			slot.Update(gameTime);
 		}
 	}
+
+    private void CreateCardDeck()
+    {
+        
+    }
 }
