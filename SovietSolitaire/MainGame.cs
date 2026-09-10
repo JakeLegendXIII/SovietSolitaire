@@ -23,7 +23,7 @@ public class MainGame : Game
 	int _width = 0;
 	int _height = 0;	
 
-	EntityManager _entityManager;
+	EntityManager _entityManager;	
 
 	public MainGame()
 	{

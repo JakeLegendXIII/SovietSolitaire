@@ -10,12 +10,14 @@ internal class Card : IGameEntity
 	public string Value { get; init; }
 
 	private Texture2D _texture;
+	private Rectangle _cardPositionOnAtlas;
 
-	public Card(string suit, string value, Texture2D texture)
+	public Card(string suit, string value, Rectangle cardPosition)
 	{
 		Suit = suit;
 		Value = value;
-		_texture = texture;
+		_texture = AssetManager.Cards;
+		_cardPositionOnAtlas = cardPosition;
 	}
 
 	public void Draw(SpriteBatch spriteBatch)
