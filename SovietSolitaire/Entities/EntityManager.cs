@@ -4,6 +4,7 @@ using SovietSolitaire.Input;
 using SovietSolitaire.Library;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SovietSolitaire.Entities;
 
@@ -27,6 +28,8 @@ public class EntityManager : IGameEntity
 	private Card _holdingCard;
 	private Slot _dragSource;
 	private Point _dragOffset;
+
+	public bool HasWon { get; private set; }
 
 	private bool IsDealing => _nextDealIndex < _dealOrder.Length;
 
@@ -82,6 +85,9 @@ public class EntityManager : IGameEntity
 
 	public void Update(GameTime gameTime)
 	{
+		if (HasWon)
+			return;
+
 		_deck.Update(gameTime);
 		foreach (var slot in _slots)
 		{
@@ -91,10 +97,32 @@ public class EntityManager : IGameEntity
 		if (IsDealing)
 		{
 			UpdateDeal(gameTime);
+			UpdateCompletion();
 			return;
 		}
 
+		UpdateCompletion();
+		if (HasWon)
+			return;
+
 		UpdateDrag();
+		UpdateCompletion();
+	}
+
+	private void UpdateCompletion()
+	{
+		if (IsDealing || _draggedCards is not null)
+			return;
+
+		foreach (var slot in _slots)
+		{
+			slot.CompleteRoyalSet();
+		}
+
+		HasWon = _holdingCard is null
+			&& _slots.Count(slot => slot.IsRoyalSetComplete) == 4
+			&& _slots.Count(slot => slot.IsNumberedSetComplete) == 4
+			&& _slots.Count(slot => slot.CardCount == 0) == 1;
 	}
 
 	private void StartDeal()
@@ -190,7 +218,7 @@ public class EntityManager : IGameEntity
 		{
 			foreach (var slot in _slots)
 			{
-				if (slot.DropBounds.Contains(mousePosition)
+				if (!slot.IsRoyalSetComplete && slot.DropBounds.Contains(mousePosition)
 					&& (slot == _dragSource || _draggedCards[0].CanPlaceOn(slot.BottomCard)))
 				{
 					destination = slot;

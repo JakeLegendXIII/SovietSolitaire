@@ -45,7 +45,15 @@ internal class Card : IGameEntity
 
 	public void Draw(SpriteBatch spriteBatch)
 	{
-		spriteBatch.Draw(_texture, Bounds, _cardPositionOnAtlas, Color.White);
+		Draw(spriteBatch, false);
+	}
+
+	public void Draw(SpriteBatch spriteBatch, bool showBlank)
+	{
+		Rectangle source = showBlank
+			? new Rectangle(0, 0, _cardPositionOnAtlas.Width, _cardPositionOnAtlas.Height)
+			: _cardPositionOnAtlas;
+		spriteBatch.Draw(_texture, Bounds, source, Color.White);
 	}
 
 	public void Update(GameTime gameTime)

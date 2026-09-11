@@ -68,6 +68,9 @@ public class MainGame : Game
 
 		_entityManager.Update(gameTime);
 
+		if (_entityManager.HasWon)
+			Window.Title = "Soviet Solitaire — You won!";
+
 		base.Update(gameTime);
 	}
 
