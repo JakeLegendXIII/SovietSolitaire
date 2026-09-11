@@ -24,6 +24,7 @@ public class EntityManager : IGameEntity
 	private int _nextDealIndex;
 	private float _dealElapsed;
 	private List<Card> _draggedCards;
+	private Card _holdingCard;
 	private Slot _dragSource;
 	private Point _dragOffset;
 
@@ -58,6 +59,7 @@ public class EntityManager : IGameEntity
 	public void Draw(SpriteBatch spriteBatch)
 	{
 		_deck.Draw(spriteBatch);
+		_holdingCard?.Draw(spriteBatch);
 		if (IsDealing && _nextDealIndex + 1 < _dealOrder.Length)
 			_dealOrder[_nextDealIndex + 1].Draw(spriteBatch);
 
@@ -154,6 +156,15 @@ public class EntityManager : IGameEntity
 		if (!InputManager.IsMouseInViewport || !InputManager.IsLeftMouseButtonDown())
 			return;
 
+		if (_holdingCard is not null && _holdingCard.Bounds.Contains(mousePosition))
+		{
+			_dragSource = null;
+			_draggedCards = new List<Card> { _holdingCard };
+			_dragOffset = mousePosition - _holdingCard.Bounds.Location;
+			_holdingCard = null;
+			return;
+		}
+
 		for (int i = _slots.Count - 1; i >= 0; i--)
 		{
 			Slot slot = _slots[i];
@@ -171,7 +182,11 @@ public class EntityManager : IGameEntity
 	private void FinishDrag(Point mousePosition)
 	{
 		Slot destination = _dragSource;
-		if (InputManager.IsMouseInViewport)
+		bool moveToHoldingSlot = InputManager.IsMouseInViewport
+			&& _deck.Bounds.Contains(mousePosition)
+			&& _holdingCard is null && _draggedCards.Count == 1;
+
+		if (!moveToHoldingSlot && InputManager.IsMouseInViewport)
 		{
 			foreach (var slot in _slots)
 			{
@@ -184,9 +199,17 @@ public class EntityManager : IGameEntity
 			}
 		}
 
-		foreach (var card in _draggedCards)
+		if (moveToHoldingSlot || destination is null)
 		{
-			destination.AddCard(card);
+			_holdingCard = _draggedCards[0];
+			_holdingCard.Bounds = _deck.Bounds;
+		}
+		else
+		{
+			foreach (var card in _draggedCards)
+			{
+				destination.AddCard(card);
+			}
 		}
 		_draggedCards = null;
 		_dragSource = null;
