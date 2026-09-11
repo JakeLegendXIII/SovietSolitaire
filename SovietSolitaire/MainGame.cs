@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SovietSolitaire.Entities;
 using SovietSolitaire.Input;
+using SovietSolitaire.Library;
 using System;
 
 namespace SovietSolitaire;
@@ -55,12 +56,12 @@ public class MainGame : Game
 	{
 		_spriteBatch = new SpriteBatch(GraphicsDevice);
 
-		// TODO: use this.Content to load your game content here
+		AssetManager.Load(Content);
 	}
 
 	protected override void Update(GameTime gameTime)
 	{
-	    InputManager.Update(_renderDestination, _scale);
+		InputManager.Update(_renderDestination, _scale, IsActive);
 
 		if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 			Exit();
@@ -96,7 +97,7 @@ public class MainGame : Game
 
 	private void OnClientSizeChanged(object sender, EventArgs e)
 	{
-		if (!_isResizing && Window.ClientBounds.Width > 0 && Window.ClientBounds.Height > 0)
+		if (_renderTarget is not null && !_isResizing && Window.ClientBounds.Width > 0 && Window.ClientBounds.Height > 0)
 		{
 			_isResizing = true;
 

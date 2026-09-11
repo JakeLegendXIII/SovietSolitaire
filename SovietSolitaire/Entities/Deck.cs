@@ -13,10 +13,11 @@ public class Deck : IGameEntity
 	private const int CardY = 10;
 	private const int LineWidth = 2;
 
+	public Rectangle Bounds => new Rectangle(CardX, CardY, CardWidth, CardHeight);
+
 	public void Draw(SpriteBatch spriteBatch)
 	{
-		Rectangle cardRectangle = new Rectangle(CardX, CardY, CardWidth, CardHeight);
-		RectangleSprite.DrawRectangle(spriteBatch, cardRectangle, Color.White, LineWidth);
+		RectangleSprite.DrawRectangle(spriteBatch, Bounds, Color.White, LineWidth);
 	}
 
 	public void Update(GameTime gameTime)

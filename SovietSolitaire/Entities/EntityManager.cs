@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SovietSolitaire.Input;
 using SovietSolitaire.Library;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,26 @@ public class EntityManager : IGameEntity
 	private const int SideMargin = 20;
 	private const int SlotPadding = 10;
 	private const int DeckCount = 37; // First card is blank can be used for back of deck or flipped cards for now
+	private const float DealDuration = 0.18f;
 
 	private List<Slot> _slots;
 	private List<Card> _cards;
 	private Deck _deck;
+	private Card[] _dealOrder;
+	private int _nextDealIndex;
+	private float _dealElapsed;
+	private Card _draggedCard;
+	private Slot _dragSource;
+	private Point _dragOffset;
+
+	private bool IsDealing => _nextDealIndex < _dealOrder.Length;
 
 	public EntityManager()
 	{
 		_slots = new();
 		_deck = new();
 		InitializeSlots();
+		StartDeal();
 	}
 
 	private void InitializeSlots()
@@ -42,15 +53,23 @@ public class EntityManager : IGameEntity
 		}
 
 		CreateCardDeck();
-	}    
+	}
 
-    public void Draw(SpriteBatch spriteBatch)
+	public void Draw(SpriteBatch spriteBatch)
 	{
 		_deck.Draw(spriteBatch);
+		if (IsDealing && _nextDealIndex + 1 < _dealOrder.Length)
+			_dealOrder[_nextDealIndex + 1].Draw(spriteBatch);
+
 		foreach (var slot in _slots)
 		{
 			slot.Draw(spriteBatch);
 		}
+
+		if (IsDealing)
+			_dealOrder[_nextDealIndex].Draw(spriteBatch);
+
+		_draggedCard?.Draw(spriteBatch);
 	}
 
 	public void Update(GameTime gameTime)
@@ -60,6 +79,103 @@ public class EntityManager : IGameEntity
 		{
 			slot.Update(gameTime);
 		}
+
+		if (IsDealing)
+		{
+			UpdateDeal(gameTime);
+			return;
+		}
+
+		UpdateDrag();
+	}
+
+	private void StartDeal()
+	{
+		_dealOrder = _cards.GetRange(1, _cards.Count - 1).ToArray();
+		Random.Shared.Shuffle(_dealOrder);
+		_nextDealIndex = 0;
+		_dealElapsed = 0;
+
+		foreach (var card in _dealOrder)
+		{
+			card.Bounds = _deck.Bounds;
+		}
+	}
+
+	private void UpdateDeal(GameTime gameTime)
+	{
+		_dealElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+		while (IsDealing && _dealElapsed >= DealDuration)
+		{
+			_slots[_nextDealIndex % SlotCount].AddCard(_dealOrder[_nextDealIndex]);
+			_nextDealIndex++;
+			_dealElapsed -= DealDuration;
+		}
+
+		if (!IsDealing)
+			return;
+
+		Rectangle start = _deck.Bounds;
+		Rectangle target = _slots[_nextDealIndex % SlotCount].GetNextCardBounds();
+		float progress = _dealElapsed / DealDuration;
+		progress = progress * progress * (3 - 2 * progress);
+		_dealOrder[_nextDealIndex].Bounds = new Rectangle(
+			(int)MathHelper.Lerp(start.X, target.X, progress),
+			(int)MathHelper.Lerp(start.Y, target.Y, progress),
+			(int)MathHelper.Lerp(start.Width, target.Width, progress),
+			(int)MathHelper.Lerp(start.Height, target.Height, progress));
+	}
+
+	private void UpdateDrag()
+	{
+		Point mousePosition = InputManager.GetTransformedMousePosition(0, 0).ToPoint();
+		if (_draggedCard is not null)
+		{
+			if (!InputManager.IsLeftMouseButtonHeld())
+			{
+				FinishDrag(mousePosition);
+				return;
+			}
+
+			_draggedCard.Bounds = new Rectangle(mousePosition - _dragOffset, _draggedCard.Bounds.Size);
+			return;
+		}
+
+		if (!InputManager.IsMouseInViewport || !InputManager.IsLeftMouseButtonDown())
+			return;
+
+		for (int i = _slots.Count - 1; i >= 0; i--)
+		{
+			Slot slot = _slots[i];
+			if (slot.BottomCard is not null && slot.BottomCard.Bounds.Contains(mousePosition))
+			{
+				_dragSource = slot;
+				_draggedCard = slot.TakeBottomCard();
+				_dragOffset = mousePosition - _draggedCard.Bounds.Location;
+				break;
+			}
+		}
+	}
+
+	private void FinishDrag(Point mousePosition)
+	{
+		Slot destination = _dragSource;
+		if (InputManager.IsMouseInViewport)
+		{
+			foreach (var slot in _slots)
+			{
+				if (slot.DropBounds.Contains(mousePosition)
+					&& (slot == _dragSource || _draggedCard.CanPlaceOn(slot.BottomCard)))
+				{
+					destination = slot;
+					break;
+				}
+			}
+		}
+
+		destination.AddCard(_draggedCard);
+		_draggedCard = null;
+		_dragSource = null;
 	}
 
 	private void CreateCardDeck()
