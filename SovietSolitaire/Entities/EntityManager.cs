@@ -62,8 +62,41 @@ public class EntityManager : IGameEntity
 		}
 	}
 
-    private void CreateCardDeck()
-    {
-        
-    }
+	private void CreateCardDeck()
+	{
+		Texture2D texture = AssetManager.Cards
+			?? throw new InvalidOperationException(
+				"Load card assets before creating the deck.");
+
+		int cardWidth = texture.Width / DeckCount;
+		int cardHeight = texture.Height;
+
+		string[] suits = ["Hearts", "Diamonds", "Spades", "Clubs"];
+		string[] values = ["6", "7", "8", "9", "10", "Ace", "Jack", "Queen", "King"];
+
+		_cards = new List<Card>(DeckCount)
+		{
+			new Card(
+				string.Empty,
+				"Blank",
+				new Rectangle(0, 0, cardWidth, cardHeight))
+		};
+
+		int atlasIndex = 1;
+
+		foreach (string value in values)
+		{
+			foreach (string suit in suits)
+			{
+				Rectangle sourceRectangle = new Rectangle(
+					atlasIndex * cardWidth,
+					0,
+					cardWidth,
+					cardHeight);
+
+				_cards.Add(new Card(suit, value, sourceRectangle));
+				atlasIndex++;
+			}
+		}
+	}
 }
