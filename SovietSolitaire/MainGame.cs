@@ -24,7 +24,8 @@ public class MainGame : Game
 	int _width = 0;
 	int _height = 0;	
 
-	EntityManager _entityManager;	
+	EntityManager _entityManager;
+	private ResetButton _resetButton;
 
 	public MainGame()
 	{
@@ -49,7 +50,13 @@ public class MainGame : Game
 
 		CalculateRenderDestination();
 
+		ResetHand();
+	}
+
+	private void ResetHand()
+	{
 		_entityManager = new EntityManager();
+		Window.Title = "Soviet Solitaire";
 	}
 
 	protected override void LoadContent()
@@ -57,6 +64,7 @@ public class MainGame : Game
 		_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 		AssetManager.Load(Content);
+		_resetButton = new ResetButton(new Point(20, 20));
 	}
 
 	protected override void Update(GameTime gameTime)
@@ -66,7 +74,10 @@ public class MainGame : Game
 		if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 			Exit();
 
-		_entityManager.Update(gameTime);
+		if (_resetButton.Update())
+			ResetHand();
+		else
+			_entityManager.Update(gameTime);
 
 		if (_entityManager.HasWon)
 			Window.Title = "Soviet Solitaire — You won!";
@@ -86,6 +97,7 @@ public class MainGame : Game
 		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
 		_entityManager.Draw(_spriteBatch);
+		_resetButton.Draw(_spriteBatch);
 
 		_spriteBatch.End();
 
