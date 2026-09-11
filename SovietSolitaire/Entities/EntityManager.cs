@@ -23,7 +23,7 @@ public class EntityManager : IGameEntity
 	private Card[] _dealOrder;
 	private int _nextDealIndex;
 	private float _dealElapsed;
-	private Card _draggedCard;
+	private List<Card> _draggedCards;
 	private Slot _dragSource;
 	private Point _dragOffset;
 
@@ -69,7 +69,13 @@ public class EntityManager : IGameEntity
 		if (IsDealing)
 			_dealOrder[_nextDealIndex].Draw(spriteBatch);
 
-		_draggedCard?.Draw(spriteBatch);
+		if (_draggedCards is not null)
+		{
+			foreach (var card in _draggedCards)
+			{
+				card.Draw(spriteBatch);
+			}
+		}
 	}
 
 	public void Update(GameTime gameTime)
@@ -129,7 +135,7 @@ public class EntityManager : IGameEntity
 	private void UpdateDrag()
 	{
 		Point mousePosition = InputManager.GetTransformedMousePosition(0, 0).ToPoint();
-		if (_draggedCard is not null)
+		if (_draggedCards is not null)
 		{
 			if (!InputManager.IsLeftMouseButtonHeld())
 			{
@@ -137,7 +143,11 @@ public class EntityManager : IGameEntity
 				return;
 			}
 
-			_draggedCard.Bounds = new Rectangle(mousePosition - _dragOffset, _draggedCard.Bounds.Size);
+			Point movement = mousePosition - _dragOffset - _draggedCards[0].Bounds.Location;
+			foreach (var card in _draggedCards)
+			{
+				card.Bounds = new Rectangle(card.Bounds.Location + movement, card.Bounds.Size);
+			}
 			return;
 		}
 
@@ -147,11 +157,12 @@ public class EntityManager : IGameEntity
 		for (int i = _slots.Count - 1; i >= 0; i--)
 		{
 			Slot slot = _slots[i];
-			if (slot.BottomCard is not null && slot.BottomCard.Bounds.Contains(mousePosition))
+			List<Card> run = slot.TakeRunAt(mousePosition);
+			if (run is not null)
 			{
 				_dragSource = slot;
-				_draggedCard = slot.TakeBottomCard();
-				_dragOffset = mousePosition - _draggedCard.Bounds.Location;
+				_draggedCards = run;
+				_dragOffset = mousePosition - _draggedCards[0].Bounds.Location;
 				break;
 			}
 		}
@@ -165,7 +176,7 @@ public class EntityManager : IGameEntity
 			foreach (var slot in _slots)
 			{
 				if (slot.DropBounds.Contains(mousePosition)
-					&& (slot == _dragSource || _draggedCard.CanPlaceOn(slot.BottomCard)))
+					&& (slot == _dragSource || _draggedCards[0].CanPlaceOn(slot.BottomCard)))
 				{
 					destination = slot;
 					break;
@@ -173,8 +184,11 @@ public class EntityManager : IGameEntity
 			}
 		}
 
-		destination.AddCard(_draggedCard);
-		_draggedCard = null;
+		foreach (var card in _draggedCards)
+		{
+			destination.AddCard(card);
+		}
+		_draggedCards = null;
 		_dragSource = null;
 	}
 

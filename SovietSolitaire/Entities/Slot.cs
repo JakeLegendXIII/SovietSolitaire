@@ -39,12 +39,25 @@ internal class Slot : IGameEntity
 		_cards.Add(card);
 	}
 
-	public Card TakeBottomCard()
+	public List<Card> TakeRunAt(Point position)
 	{
-		Card card = BottomCard;
-		if (card is not null)
-			_cards.RemoveAt(_cards.Count - 1);
-		return card;
+		for (int i = _cards.Count - 1; i >= 0; i--)
+		{
+			if (!_cards[i].Bounds.Contains(position))
+				continue;
+
+			for (int j = i + 1; j < _cards.Count; j++)
+			{
+				if (!_cards[j].CanPlaceOn(_cards[j - 1]))
+					return null;
+			}
+
+			List<Card> run = _cards.GetRange(i, _cards.Count - i);
+			_cards.RemoveRange(i, run.Count);
+			return run;
+		}
+
+		return null;
 	}
 
 	public void Draw(SpriteBatch spriteBatch)
