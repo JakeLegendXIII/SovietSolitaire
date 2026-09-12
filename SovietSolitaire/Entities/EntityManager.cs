@@ -230,7 +230,12 @@ public class EntityManager : IGameEntity
 		if (moveToHoldingSlot || destination is null)
 		{
 			_holdingCard = _draggedCards[0];
-			_holdingCard.Bounds = _deck.Bounds;
+			Rectangle slotBounds = _deck.Bounds;
+			Point cardSize = _holdingCard.Bounds.Size;
+			_holdingCard.Bounds = new Rectangle(
+				slotBounds.X + (slotBounds.Width - cardSize.X) / 2,
+				slotBounds.Y + (slotBounds.Height - cardSize.Y) / 2,
+				cardSize.X, cardSize.Y);
 		}
 		else
 		{
