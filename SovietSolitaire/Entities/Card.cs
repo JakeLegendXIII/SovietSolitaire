@@ -4,7 +4,7 @@ using SovietSolitaire.Library;
 
 namespace SovietSolitaire.Entities;
 
-internal class Card : IGameEntity
+public class Card : IGameEntity
 {
 	public string Suit { get; init; }
 	public string Value { get; init; }

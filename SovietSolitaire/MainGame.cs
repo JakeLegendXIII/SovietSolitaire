@@ -26,6 +26,7 @@ public class MainGame : Game
 
 	EntityManager _entityManager;
 	private ResetButton _resetButton;
+	private RulesButton _rulesButton;
 
 	public MainGame()
 	{
@@ -53,18 +54,13 @@ public class MainGame : Game
 		ResetHand();
 	}
 
-	private void ResetHand()
-	{
-		_entityManager = new EntityManager();
-		Window.Title = "Soviet Solitaire";
-	}
-
 	protected override void LoadContent()
 	{
 		_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 		AssetManager.Load(Content);
 		_resetButton = new ResetButton(new Point(20, 20));
+		_rulesButton = new RulesButton(new Point(225, 20));
 	}
 
 	protected override void Update(GameTime gameTime)
@@ -110,7 +106,13 @@ public class MainGame : Game
 		base.Draw(gameTime);
 	}
 
-	private void OnClientSizeChanged(object sender, EventArgs e)
+    private void ResetHand()
+    {
+        _entityManager = new EntityManager();
+        Window.Title = "Soviet Solitaire";
+    }
+
+    private void OnClientSizeChanged(object sender, EventArgs e)
 	{
 		if (_renderTarget is not null && !_isResizing && Window.ClientBounds.Width > 0 && Window.ClientBounds.Height > 0)
 		{
