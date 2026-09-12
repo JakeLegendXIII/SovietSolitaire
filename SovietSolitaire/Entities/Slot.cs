@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SovietSolitaire.Entities;
 
-internal class Slot : IGameEntity
+public class Slot : IGameEntity
 {
 	private const int CardHeight = 165;
 	private const int LineWidth = 2;
