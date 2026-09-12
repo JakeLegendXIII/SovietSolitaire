@@ -47,7 +47,18 @@ public class Slot : IGameEntity
 		_cardWidth = cardWidth;
 	}
 
-	public Rectangle GetNextCardBounds()
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        RectangleSprite.DrawRectangle(spriteBatch, Bounds, Color.White, LineWidth);
+        foreach (var card in _cards)
+        {
+            card.Draw(spriteBatch, IsRoyalSetComplete);
+        }
+    }
+
+    public void Update(GameTime gameTime) { }
+
+    public Rectangle GetNextCardBounds()
 	{
 		return new Rectangle(_position.X, _position.Y + _cards.Count * StackOffset, _cardWidth, CardHeight);
 	}
@@ -93,19 +104,5 @@ public class Slot : IGameEntity
 		}
 
 		return null;
-	}
-
-	public void Draw(SpriteBatch spriteBatch)
-	{
-		RectangleSprite.DrawRectangle(spriteBatch, Bounds, Color.White, LineWidth);
-		foreach (var card in _cards)
-		{
-			card.Draw(spriteBatch, IsRoyalSetComplete);
-		}
-	}
-
-	public void Update(GameTime gameTime)
-	{
-		
 	}
 }
