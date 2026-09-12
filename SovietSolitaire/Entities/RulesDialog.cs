@@ -55,7 +55,7 @@ internal class RulesDialog : IGameEntity
             + Padding * 2 + Gap * 2 + _buttonTexture.Height;
 
         Bounds = new Rectangle((viewportSize.X - width) / 2, (viewportSize.Y - height) / 2, width, height);
-        _titlePosition = new Vector2(Bounds.Center.X - titleSize.X / 2, Bounds.Top + Padding);
+        _titlePosition = new Vector2(MathF.Floor(Bounds.Center.X - titleSize.X / 2), Bounds.Top + Padding);
         _bodyPosition = new Vector2(Bounds.Left + Padding, _titlePosition.Y + titleSize.Y + Gap);
         CloseButtonBounds = new Rectangle(Bounds.Center.X - _buttonTexture.Width / 2,
             Bounds.Bottom - Padding - _buttonTexture.Height, _buttonTexture.Width, _buttonTexture.Height);
