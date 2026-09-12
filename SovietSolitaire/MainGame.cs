@@ -72,6 +72,8 @@ public class MainGame : Game
 
 		if (_resetButton.Update())
 			ResetHand();
+		else if (_rulesButton.Update())
+			ResetHand();
 		else
 			_entityManager.Update(gameTime);
 
@@ -94,6 +96,7 @@ public class MainGame : Game
 
 		_entityManager.Draw(_spriteBatch);
 		_resetButton.Draw(_spriteBatch);
+		_rulesButton.Draw(_spriteBatch);
 
 		_spriteBatch.End();
 
