@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SovietSolitaire.Input;
 
-internal static class InputManager
+public static class InputManager
 {
 	private static MouseState mouseState, lastMouseState;
 	private static KeyboardState keyboardState, lastKeyboardState;

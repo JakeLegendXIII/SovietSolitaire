@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SovietSolitaire.Entities;
 
-internal class RulesDialog : IGameEntity
+public class RulesDialog : IGameEntity
 {
     private const string Title = "How to play";
     private const string CloseLabel = "OK";
