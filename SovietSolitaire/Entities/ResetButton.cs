@@ -5,7 +5,7 @@ using SovietSolitaire.Library;
 
 namespace SovietSolitaire.Entities;
 
-internal class ResetButton
+public class ResetButton : IGameEntity
 {
     private const string Label = "Reset";
 
@@ -24,6 +24,8 @@ internal class ResetButton
         Bounds = new Rectangle(position.X, position.Y, _texture.Width, _texture.Height);
         _textPosition = Bounds.Center.ToVector2() - _font.MeasureString(Label) / 2;
     }
+
+    public void Update(GameTime gameTime) { }
 
     public bool Update()
     {
@@ -49,4 +51,5 @@ internal class ResetButton
         spriteBatch.Draw(_texture, Bounds, tint);
         spriteBatch.DrawString(_font, Label, _textPosition, Color.White);
     }
+    
 }
