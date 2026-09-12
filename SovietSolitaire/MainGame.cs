@@ -27,6 +27,7 @@ public class MainGame : Game
 	EntityManager _entityManager;
 	private ResetButton _resetButton;
 	private RulesButton _rulesButton;
+	private RulesDialog _rulesDialog;
 
 	public MainGame()
 	{
@@ -61,26 +62,45 @@ public class MainGame : Game
 		AssetManager.Load(Content);
 		_resetButton = new ResetButton(new Point(20, 20));
 		_rulesButton = new RulesButton(new Point(225, 20));
+		_rulesDialog = new RulesDialog(new Point(_nativeWidth, _nativeHeight));
 	}
 
 	protected override void Update(GameTime gameTime)
 	{
 		InputManager.Update(_renderDestination, _scale, IsActive);
+		UpdateGameState(gameTime);
+		base.Update(gameTime);
+	}
 
-		if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+	private void UpdateGameState(GameTime gameTime)
+	{
+		bool backPressed = IsActive && (InputManager.IsKeyPressed(Keys.Escape)
+			|| InputManager.IsButtonPressed(Buttons.Back));
+
+		if (_rulesDialog.IsOpen)
+		{
+			if (backPressed)
+				_rulesDialog.Close();
+			else
+				_rulesDialog.Update(gameTime);
+			return;
+		}
+
+		if (backPressed)
+		{
 			Exit();
+			return;
+		}
 
 		if (_resetButton.Update())
 			ResetHand();
 		else if (_rulesButton.Update())
-			ResetHand();
+			_rulesDialog.Show();
 		else
 			_entityManager.Update(gameTime);
 
 		if (_entityManager.HasWon)
 			Window.Title = "Soviet Solitaire — You won!";
-
-		base.Update(gameTime);
 	}
 
 	protected override void Draw(GameTime gameTime)
@@ -97,6 +117,7 @@ public class MainGame : Game
 		_entityManager.Draw(_spriteBatch);
 		_resetButton.Draw(_spriteBatch);
 		_rulesButton.Draw(_spriteBatch);
+		_rulesDialog.Draw(_spriteBatch);
 
 		_spriteBatch.End();
 
