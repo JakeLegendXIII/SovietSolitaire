@@ -1,0 +1,45 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/$(Platform)
+/intermediateDir:obj/$(Platform)
+/platform:BlazorGL
+/config:
+/profile:Reach
+/compress:True
+
+#-------------------------------- References --------------------------------#
+
+
+#---------------------------------- Content ---------------------------------#
+
+#begin Effects/Grayscale.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/build:Effects/Grayscale.fx
+
+#begin Fonts/ArmadaBold16.png
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/build:Fonts/ArmadaBold16.png
+
+#begin Fonts/Faraway16.png
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/build:Fonts/Faraway16.png
+
+#begin Sprites/Cards.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/Cards.png
+
+#begin UI/ConfirmationBanner.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:UI/ConfirmationBanner.png
+
+#begin UI/MenuButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:UI/MenuButton.png
+

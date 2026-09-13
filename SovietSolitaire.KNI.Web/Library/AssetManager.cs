@@ -1,0 +1,22 @@
+﻿using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace SovietSolitaire.KNI.Web.Library;
+
+public static class AssetManager
+{
+	public static SpriteFont ArmadaFont { get; private set; }
+	public static SpriteFont FarawayFont { get; private set; }
+	public static Texture2D Cards {  get; private set; }
+	public static Texture2D ButtonUI { get; private set; }
+	public static Texture2D ConfirmationBanner { get; private set; }
+
+	public static void Load(ContentManager content)
+	{
+		ArmadaFont = content.Load<SpriteFont>("Fonts/ArmadaBold16");
+		FarawayFont = content.Load<SpriteFont>("Fonts/Faraway16");
+		Cards = content.Load<Texture2D>("Sprites/Cards");
+		ButtonUI = content.Load<Texture2D>("UI/MenuButton");
+		ConfirmationBanner = content.Load<Texture2D>("UI/ConfirmationBanner");
+	}
+}
