@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace SovietSolitaire.Input;
+namespace SovietSolitaire.Engine.Input;
 
 public static class InputManager
 {

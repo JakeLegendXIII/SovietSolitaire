@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SovietSolitaire.Entities;
-using SovietSolitaire.Input;
-using SovietSolitaire.Library;
+using SovietSolitaire.Engine.Entities;
+using SovietSolitaire.Engine.Input;
+using SovietSolitaire.Engine.Library;
 using System;
 
-namespace SovietSolitaire;
+namespace SovietSolitaire.Engine;
 
 public class MainGame : Game
 {
@@ -22,7 +22,7 @@ public class MainGame : Game
 	bool _isFullscreen = false;
 	bool _isBorderless = false;
 	int _width = 0;
-	int _height = 0;	
+	int _height = 0;
 
 	EntityManager _entityManager;
 	private ResetButton _resetButton;
@@ -124,19 +124,19 @@ public class MainGame : Game
 		GraphicsDevice.SetRenderTarget(null);
 
 		_spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-		_spriteBatch.Draw(_renderTarget, _renderDestination, Color.White);		
+		_spriteBatch.Draw(_renderTarget, _renderDestination, Color.White);
 		_spriteBatch.End();
 
 		base.Draw(gameTime);
 	}
 
-    private void ResetHand()
-    {
-        _entityManager = new EntityManager();
-        Window.Title = "Soviet Solitaire";
-    }
+	private void ResetHand()
+	{
+		_entityManager = new EntityManager();
+		Window.Title = "Soviet Solitaire";
+	}
 
-    private void OnClientSizeChanged(object sender, EventArgs e)
+	private void OnClientSizeChanged(object sender, EventArgs e)
 	{
 		if (_renderTarget is not null && !_isResizing && Window.ClientBounds.Width > 0 && Window.ClientBounds.Height > 0)
 		{
@@ -237,3 +237,4 @@ public class MainGame : Game
 		_graphics.ApplyChanges();
 	}
 }
+

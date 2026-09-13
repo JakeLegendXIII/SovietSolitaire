@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SovietSolitaire.Library;
+using SovietSolitaire.Engine.Library;
 
-namespace SovietSolitaire.Entities;
+namespace SovietSolitaire.Engine.Entities;
 
 public class Card : IGameEntity
 {

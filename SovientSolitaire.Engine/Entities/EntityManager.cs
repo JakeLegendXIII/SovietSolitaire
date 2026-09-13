@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SovietSolitaire.Input;
-using SovietSolitaire.Library;
+using SovietSolitaire.Engine.Input;
+using SovietSolitaire.Engine.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SovietSolitaire.Entities;
+namespace SovietSolitaire.Engine.Entities;
 
 public class EntityManager : IGameEntity
 {

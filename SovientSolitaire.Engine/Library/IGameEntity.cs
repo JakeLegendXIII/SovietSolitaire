@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SovietSolitaire.Library;
+namespace SovietSolitaire.Engine.Library;
 
 public interface IGameEntity
 {

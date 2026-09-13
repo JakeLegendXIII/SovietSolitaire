@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SovietSolitaire.Library;
-using SovietSolitaire.Graphics;
+using SovietSolitaire.Engine.Library;
+using SovietSolitaire.Engine.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SovietSolitaire.Entities;
+namespace SovietSolitaire.Engine.Entities;
 
 public class Slot : IGameEntity
 {

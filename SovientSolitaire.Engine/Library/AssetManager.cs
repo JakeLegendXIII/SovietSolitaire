@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SovietSolitaire.Library;
+namespace SovietSolitaire.Engine.Library;
 
 public static class AssetManager
 {

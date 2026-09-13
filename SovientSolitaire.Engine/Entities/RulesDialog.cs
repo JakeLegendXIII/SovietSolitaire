@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SovietSolitaire.Input;
-using SovietSolitaire.Library;
+using SovietSolitaire.Engine.Input;
+using SovietSolitaire.Engine.Library;
 using System;
 using System.Text;
 
-namespace SovietSolitaire.Entities;
+namespace SovietSolitaire.Engine.Entities;
 
 public class RulesDialog : IGameEntity
 {

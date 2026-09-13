@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SovietSolitaire.Input;
-using SovietSolitaire.Library;
+using SovietSolitaire.Engine.Input;
+using SovietSolitaire.Engine.Library;
 
-namespace SovietSolitaire.Entities;
+namespace SovietSolitaire.Engine.Entities;
 
-public class RulesButton : IGameEntity
+public class ResetButton : IGameEntity
 {
-    private const string Label = "Rules";
+    private const string Label = "Reset";
 
     private readonly Texture2D _texture;
     private readonly SpriteFont _font;
@@ -17,7 +17,7 @@ public class RulesButton : IGameEntity
 
     public Rectangle Bounds { get; }
 
-    public RulesButton(Point position)
+    public ResetButton(Point position)
     {
         _texture = AssetManager.ButtonUI;
         _font = AssetManager.ArmadaFont;
@@ -51,4 +51,5 @@ public class RulesButton : IGameEntity
         spriteBatch.Draw(_texture, Bounds, tint);
         spriteBatch.DrawString(_font, Label, _textPosition, Color.White);
     }
+    
 }

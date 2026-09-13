@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SovietSolitaire.Library;
-using SovietSolitaire.Graphics;
+using SovietSolitaire.Engine.Library;
+using SovietSolitaire.Engine.Graphics;
 
-namespace SovietSolitaire.Entities;
+namespace SovietSolitaire.Engine.Entities;
 
 public class Deck : IGameEntity
 {
