@@ -1,16 +1,35 @@
 # SovietSolitaire
 
-Basic Solitaire Game using a 36 card deck. The suits are made up of 6-10 numbers and the 4 face cards.
-The rules are similar to Klondike Solitaire but adapted for a smaller deck. Face cards can be stacked in any order.
-Numbers must be stacked like in Klondike (alternating colors, descending order).
-There are 9 slots and 1 place at the top to place a single card to help you make moves.
-When completing face card stacks, they are flipped over and that slot is no longer able to be used.
+SovietSolitaire is a solitaire game played with a 36-card deck. Each suit contains the numbered cards 6 through 10, plus the Ace, Jack, Queen, and King. The rules are similar to Klondike Solitaire but are adapted for the smaller deck.
 
-"Goal: Complete four alternating-color 10-to-6 stacks and four same-suit royal/Ace sets. The holding slot and one of the nine play slots must be empty.\n\n" +
-        "Deal: The 36 playable cards are shuffled into nine stacks of four.\n\n" +
-        "Moving cards: Drag a bottom card, or an exposed card with every card below it. A moved run must already follow the building rules. Any card or valid run may enter an empty slot.\n\n" +
-        "Numbered cards: Build down by one, alternating red and black: 10, 9, 8, 7, 6.\n\n" +
-        "Royals and Ace: Ace, Jack, Queen and King may be stacked in any order, but must share a suit. Never mix them with numbered cards.\n\n" +
-        "Holding slot: The top slot holds one card only, not a run. Once released there, the card must follow normal placement rules when moved back out.\n\n" +
-        "Completed sets: A slot with only the four same-suit royals/Ace turns into four blanks and locks. Numbered stacks stay movable until you win.\n\n" +
-        "Invalid moves return to their source. Reset starts a newly shuffled hand. Winning stops card moves; Reset lets you play again.";
+## Rules
+
+### Goal
+
+Complete four alternating-color stacks from 10 down to 6 and four same-suit sets containing the Ace, Jack, Queen, and King. To win, the holding slot and one of the nine play slots must be empty.
+
+### Deal
+
+The 36 cards are shuffled and dealt into nine stacks of four cards.
+
+### Moving cards
+
+Drag the bottom card of a stack, or an exposed card together with every card below it. A run of cards can be moved only if it already follows the building rules. Any single card or valid run may be moved into an empty play slot.
+
+### Numbered cards
+
+Build downward by one rank while alternating between red and black suits: 10, 9, 8, 7, 6.
+
+### Aces and face cards
+
+The Ace, Jack, Queen, and King may be stacked in any order, but all four cards must share the same suit. These cards cannot be mixed with numbered cards.
+
+### Holding slot
+
+The holding slot at the top can contain only one card, not a run. A card moved out of the holding slot must follow the normal placement rules.
+
+### Completed sets
+
+A play slot containing only the Ace, Jack, Queen, and King of the same suit is completed, replaced with four blank cards, and locked. Completed numbered stacks remain movable until the game is won.
+
+Invalid moves return the cards to their source. Winning prevents further card movement. Use **Reset** to shuffle and start a new game.
