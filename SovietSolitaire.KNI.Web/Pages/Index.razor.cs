@@ -1,5 +1,6 @@
 ﻿using Microsoft.JSInterop;
 using Microsoft.Xna.Framework;
+using SovietSolitaire.Engine;
 using System;
 
 namespace SovietSolitaire_KNI_Web.Pages
@@ -24,7 +25,7 @@ namespace SovietSolitaire_KNI_Web.Pages
 			// init game
 			if (_game == null)
 			{
-				_game = new SovietSolitaire_KNI_WebGame();
+				_game = new MainGame();
 				_game.Run();
 			}
 

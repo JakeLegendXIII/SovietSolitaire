@@ -23,20 +23,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Entities\Card.cs" />
-    <Compile Include="Entities\Deck.cs" />
-    <Compile Include="Entities\EntityManager.cs" />
-    <Compile Include="Entities\ResetButton.cs" />
-    <Compile Include="Entities\RulesButton.cs" />
-    <Compile Include="Entities\RulesDialog.cs" />
-    <Compile Include="Entities\Slot.cs" />
-    <Compile Include="Graphics\RectangleSprite.cs" />
-    <Compile Include="Input\InputManager.cs" />
-    <Compile Include="Library\AssetManager.cs" />
-    <Compile Include="Library\IGameEntity.cs" />
     <Compile Include="Pages\Index.razor.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="SovietSolitaire.KNI.WebGame.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,6 +53,11 @@
 
   <ItemGroup>
     <KniContentReference Include="Content\SovietSolitaire.KNI.WebContent.mgcb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SovientSolitaire.Engine\SovietSolitaire.Engine.csproj"
+                      AdditionalProperties="GameFramework=KNI" />
   </ItemGroup>
 
 </Project>
