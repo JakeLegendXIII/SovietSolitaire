@@ -32,6 +32,7 @@ public class MainGame : Game
 	public MainGame()
 	{
 		_graphics = new GraphicsDeviceManager(this);
+		_graphics.GraphicsProfile = GraphicsProfile.HiDef;
 		Content.RootDirectory = "Content";
 		IsMouseVisible = true;
 
