@@ -28,11 +28,6 @@
 /processor:FontTextureProcessor
 /build:Fonts/Faraway16.png
 
-#begin Sprites/Cards.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/build:Sprites/Cards.png
-
 #begin Sprites/Club_Cards.png
 /importer:TextureImporter
 /processor:TextureProcessor
