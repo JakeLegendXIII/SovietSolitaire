@@ -33,6 +33,26 @@
 /processor:TextureProcessor
 /build:Sprites/Cards.png
 
+#begin Sprites/Club_Cards.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/Club_Cards.png
+
+#begin Sprites/Diamond_Cards.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/Diamond_Cards.png
+
+#begin Sprites/Heart_Cards.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/Heart_Cards.png
+
+#begin Sprites/Spade_Cards.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/Spade_Cards.png
+
 #begin UI/ConfirmationBanner.png
 /importer:TextureImporter
 /processor:TextureProcessor
