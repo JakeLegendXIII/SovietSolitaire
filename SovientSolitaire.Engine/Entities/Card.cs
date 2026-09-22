@@ -13,14 +13,14 @@ public class Card : IGameEntity
 	private bool IsRed => Suit is "Hearts" or "Diamonds";
 	private bool IsRoyalOrAce => Value is "Ace" or "Jack" or "Queen" or "King";
 
-	private Texture2D _texture;
-	private Rectangle _cardPositionOnAtlas;
+	private readonly Texture2D _texture;
+	private readonly Rectangle _cardPositionOnAtlas;
 
-	public Card(string suit, string value, Rectangle cardPosition)
+	public Card(string suit, string value, Texture2D texture, Rectangle cardPosition)
 	{
 		Suit = suit;
 		Value = value;
-		_texture = AssetManager.Cards;
+		_texture = texture;
 		_cardPositionOnAtlas = cardPosition;
 	}
 

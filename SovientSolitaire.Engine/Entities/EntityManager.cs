@@ -16,7 +16,7 @@ public class EntityManager : IGameEntity
 	private const int SlotCount = 9;
 	private const int SideMargin = 20;
 	private const int SlotPadding = 10;
-	private const int DeckCount = 37; // First card is blank can be used for back of deck or flipped cards for now
+	private const int CardsPerSuit = 10; // First card is blank can be used for back of deck or flipped cards for now
 	private const float DealDuration = 0.18f;
 
 	private List<Slot> _slots;
@@ -251,38 +251,40 @@ public class EntityManager : IGameEntity
 
 	private void CreateCardDeck()
 	{
-		Texture2D texture = AssetManager.Cards
+		(string Suit, Texture2D Texture)[] suits =
+		[
+			("Hearts", AssetManager.HeartCards),
+			("Diamonds", AssetManager.DiamondCards),
+			("Spades", AssetManager.SpadeCards),
+			("Clubs", AssetManager.ClubCards)
+		];
+		string[] values = ["6", "7", "8", "9", "10", "Ace", "Jack", "Queen", "King"];
+		Texture2D blankTexture = AssetManager.ClubCards
 			?? throw new InvalidOperationException(
 				"Load card assets before creating the deck.");
+		int blankCardWidth = blankTexture.Width / CardsPerSuit;
 
-		int cardWidth = texture.Width / DeckCount;
-		int cardHeight = texture.Height;
-
-		string[] suits = ["Hearts", "Diamonds", "Spades", "Clubs"];
-		string[] values = ["6", "7", "8", "9", "10", "Ace", "Jack", "Queen", "King"];
-
-		_cards = new List<Card>(DeckCount)
+		_cards = new List<Card>(1 + (suits.Length * values.Length))
 		{
 			new Card(
 				string.Empty,
 				"Blank",
-				new Rectangle(0, 0, cardWidth, cardHeight))
+				blankTexture,
+				new Rectangle(0, 0, blankCardWidth, blankTexture.Height))
 		};
 
-		int atlasIndex = 1;
-
-		foreach (string value in values)
+		for (int valueIndex = 0; valueIndex < values.Length; valueIndex++)
 		{
-			foreach (string suit in suits)
+			foreach ((string suit, Texture2D texture) in suits)
 			{
+				int cardWidth = texture.Width / CardsPerSuit;
 				Rectangle sourceRectangle = new Rectangle(
-					atlasIndex * cardWidth,
+					(valueIndex + 1) * cardWidth,
 					0,
 					cardWidth,
-					cardHeight);
+					texture.Height);
 
-				_cards.Add(new Card(suit, value, sourceRectangle));
-				atlasIndex++;
+				_cards.Add(new Card(suit, values[valueIndex], texture, sourceRectangle));
 			}
 		}
 	}
