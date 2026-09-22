@@ -26,6 +26,7 @@ public class MainGame : Game
 
 	EntityManager _entityManager;
 	private ResetButton _resetButton;
+	private ResetDialog _resetDialog;
 	private RulesButton _rulesButton;
 	private RulesDialog _rulesDialog;
 
@@ -62,6 +63,7 @@ public class MainGame : Game
 
 		AssetManager.Load(Content);
 		_resetButton = new ResetButton(new Point(20, 20));
+		_resetDialog = new ResetDialog(new Point(_nativeWidth, _nativeHeight));
 		_rulesButton = new RulesButton(new Point(225, 20));
 		_rulesDialog = new RulesDialog(new Point(_nativeWidth, _nativeHeight));
 	}
@@ -77,6 +79,15 @@ public class MainGame : Game
 	{
 		bool backPressed = IsActive && (InputManager.IsKeyPressed(Keys.Escape)
 			|| InputManager.IsButtonPressed(Buttons.Back));
+
+		if (_resetDialog.IsOpen)
+		{
+			if (backPressed)
+				_resetDialog.Close();
+			else if (_resetDialog.Update())
+				ResetHand();
+			return;
+		}
 
 		if (_rulesDialog.IsOpen)
 		{
@@ -94,7 +105,7 @@ public class MainGame : Game
 		}
 
 		if (_resetButton.Update())
-			ResetHand();
+			_resetDialog.Show();
 		else if (_rulesButton.Update())
 			_rulesDialog.Show();
 		else
@@ -119,6 +130,7 @@ public class MainGame : Game
 		_resetButton.Draw(_spriteBatch);
 		_rulesButton.Draw(_spriteBatch);
 		_rulesDialog.Draw(_spriteBatch);
+		_resetDialog.Draw(_spriteBatch);
 
 		_spriteBatch.End();
 
