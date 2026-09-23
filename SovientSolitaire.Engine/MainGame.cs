@@ -29,6 +29,7 @@ public class MainGame : Game
 	private ResetDialog _resetDialog;
 	private RulesButton _rulesButton;
 	private RulesDialog _rulesDialog;
+	private WinDialog _winDialog;
 
 	public MainGame()
 	{
@@ -66,6 +67,7 @@ public class MainGame : Game
 		_resetDialog = new ResetDialog(new Point(_nativeWidth, _nativeHeight));
 		_rulesButton = new RulesButton(new Point(225, 20));
 		_rulesDialog = new RulesDialog(new Point(_nativeWidth, _nativeHeight));
+		_winDialog = new WinDialog(new Point(_nativeWidth, _nativeHeight));
 	}
 
 	protected override void Update(GameTime gameTime)
@@ -98,6 +100,13 @@ public class MainGame : Game
 			return;
 		}
 
+		if (_winDialog.IsOpen)
+		{
+			if (_winDialog.Update())
+				ResetHand();
+			return;
+		}
+
 		if (backPressed)
 		{
 			Exit();
@@ -112,7 +121,10 @@ public class MainGame : Game
 			_entityManager.Update(gameTime);
 
 		if (_entityManager.HasWon)
+		{
 			Window.Title = "Soviet Solitaire — You won!";
+			_winDialog.Show();
+		}
 	}
 
 	protected override void Draw(GameTime gameTime)
@@ -131,6 +143,7 @@ public class MainGame : Game
 		_rulesButton.Draw(_spriteBatch);
 		_rulesDialog.Draw(_spriteBatch);
 		_resetDialog.Draw(_spriteBatch);
+		_winDialog.Draw(_spriteBatch);
 
 		_spriteBatch.End();
 
