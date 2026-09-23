@@ -10,7 +10,6 @@ namespace SovietSolitaire.Engine.Entities;
 
 public class EntityManager : IGameEntity
 {
-	// TODO : Resize card assets
 	private const int ScreenWidth = 1280;
 	private const int ScreenHeight = 800;
 	private const int SlotCount = 9;
