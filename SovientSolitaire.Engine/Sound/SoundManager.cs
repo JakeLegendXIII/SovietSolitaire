@@ -69,3 +69,4 @@ public class SoundManager : IGameEntity
 			currentTrack.Stop();
 		}
 	}
+}

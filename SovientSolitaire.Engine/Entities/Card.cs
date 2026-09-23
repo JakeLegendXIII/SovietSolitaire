@@ -1,11 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SovietSolitaire.Engine.Graphics;
 using SovietSolitaire.Engine.Library;
 
 namespace SovietSolitaire.Engine.Entities;
 
 public class Card : IGameEntity
 {
+	private const int BorderWidth = 3;
+
 	public string Suit { get; init; }
 	public string Value { get; init; }
 	public Rectangle Bounds { get; set; }
@@ -54,6 +57,9 @@ public class Card : IGameEntity
 			? new Rectangle(0, 0, _cardPositionOnAtlas.Width, _cardPositionOnAtlas.Height)
 			: _cardPositionOnAtlas;
 		spriteBatch.Draw(_texture, Bounds, source, Color.White);
+		RectangleSprite.DrawRectangle(spriteBatch,
+			new Rectangle(Bounds.X, Bounds.Y, Bounds.Width - BorderWidth, Bounds.Height - BorderWidth),
+			Color.Black, BorderWidth);
 	}
 
 	public void Update(GameTime gameTime)
