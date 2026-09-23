@@ -1,4 +1,4 @@
-<Project>
+﻿<Project>
   <PropertyGroup>
     <GameFramework Condition="'$(GameFramework)' == ''">MonoGame</GameFramework>
     <BaseIntermediateOutputPath>obj\$(GameFramework)\</BaseIntermediateOutputPath>
@@ -25,8 +25,7 @@
     <PackageReference Include="nkast.Xna.Framework.Game" Version="4.3.9001" PrivateAssets="all" />
   </ItemGroup>
 
-  <Target Name="ValidateGameFramework" BeforeTargets="PrepareForBuild"
-          Condition="'$(GameFramework)' != 'MonoGame' and '$(GameFramework)' != 'KNI'">
+  <Target Name="ValidateGameFramework" BeforeTargets="PrepareForBuild" Condition="'$(GameFramework)' != 'MonoGame' and '$(GameFramework)' != 'KNI'">
     <Error Text="GameFramework must be either 'MonoGame' or 'KNI'." />
   </Target>
 
